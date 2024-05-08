@@ -1,0 +1,2 @@
+model.add(Dense(1024))
+epochs=2000
