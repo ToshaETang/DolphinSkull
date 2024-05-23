@@ -1,3 +1,48 @@
 ssh ttang001@hpc1.ntnu.edu.tw
 
-21e790
+21e790 -> tosha20011012
+
+工作目錄
+ cd /lustre/lwork/ttang001
+
+cd myproject
+source venv/bin/activate
+
+-----
+
+[ttang001@login2 ttang001]$ module load python-3.12.3
+[ttang001@login2 ttang001]$ module load conda
+
+scp -r 2022-3-8 ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001
+
+scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/2022-3-8 C:\Users\Tosha.E.T\Documents\GitHub\DolphinSkull
+
+
+---虛擬環境(為了裝套件)
+[ttang001@login2 ttang001]$ mkdir myproject
+[ttang001@login2 ttang001]$ cd myproject
+[ttang001@login2 myproject]$ python3 -m venv venv
+[ttang001@login2 myproject]$ source venv/bin/activate
+(venv) [ttang001@login2 myproject]$ deactivate
+
+pip install --upgrade pip --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
+
+pip install numpy --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
+
+pip install numpy opencv-python keras tensorflow matplotlib --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
+
+-----
+
+用conda裝套件
+(venv) [ttang001@login1 myproject]$ conda install numpy
+
+
+
+-----安裝SSL
+
+wget https://www.openssl.org/source/openssl-3.3.0.tar.gz
+tar -xzf openssl-3.3.0.tar.gz
+cd openssl-3.3.0
+./config --prefix=$HOME/openssl --openssldir=$HOME/openssl
+make
+make install
