@@ -12,10 +12,10 @@ print("START")
 
 # 自定義參數
 image_folder_path = r'origin'
-w, h = 28, 28  # 圖像大小
+w, h = 28, 28#200, 200  # 圖像大小
 BUFFER_SIZE = 1000
 BATCH_SIZE = 256
-EPOCHS = 500
+EPOCHS = 100000
 noise_dim = 100
 num_examples_to_generate = 16
 
@@ -36,6 +36,36 @@ X_train = np.array(X_train) / 255.0 * 2 - 1  # Normalize to [-1, 1]
 X_train = np.expand_dims(X_train, axis=-1)
 train_dataset = tf.data.Dataset.from_tensor_slices(X_train).shuffle(BUFFER_SIZE).batch(BATCH_SIZE)
 
+'''
+def make_generator_model():
+    model = tf.keras.Sequential()
+    model.add(layers.Dense(25*25*256, use_bias=False, input_shape=(noise_dim,)))  # 25*25=625，调整为合适的值
+    model.add(layers.BatchNormalization())
+    model.add(layers.LeakyReLU())
+
+    model.add(layers.Reshape((25, 25, 256)))  # 25x25
+    assert model.output_shape == (None, 25, 25, 256)  # 確認輸出形狀
+
+    model.add(layers.Conv2DTranspose(128, (5, 5), strides=(2, 2), padding='same', use_bias=False))
+    assert model.output_shape == (None, 50, 50, 128)
+    model.add(layers.BatchNormalization())
+    model.add(layers.LeakyReLU())
+
+    model.add(layers.Conv2DTranspose(64, (5, 5), strides=(2, 2), padding='same', use_bias=False))
+    assert model.output_shape == (None, 100, 100, 64)
+    model.add(layers.BatchNormalization())
+    model.add(layers.LeakyReLU())
+
+    model.add(layers.Conv2DTranspose(32, (5, 5), strides=(2, 2), padding='same', use_bias=False))
+    assert model.output_shape == (None, 200, 200, 32)
+    model.add(layers.BatchNormalization())
+    model.add(layers.LeakyReLU())
+
+    model.add(layers.Conv2DTranspose(1, (5, 5), strides=(1, 1), padding='same', use_bias=False, activation='tanh'))
+    assert model.output_shape == (None, 200, 200, 1)
+
+    return model
+'''
 def make_generator_model():
     model = tf.keras.Sequential()
     model.add(layers.Dense(7*7*256, use_bias=False, input_shape=(100,)))
@@ -67,6 +97,33 @@ generated_image = generator(noise, training=False)
 
 plt.imshow(generated_image[0, :, :, 0], cmap='gray')
 
+'''
+def make_discriminator_model():
+    model = tf.keras.Sequential()
+    model.add(layers.Conv2D(64, (5, 5), strides=(2, 2), padding='same', input_shape=[200, 200, 1]))
+    model.add(layers.LeakyReLU())
+    model.add(layers.Dropout(0.3))
+
+    model.add(layers.Conv2D(128, (5, 5), strides=(2, 2), padding='same'))
+    model.add(layers.LeakyReLU())
+    model.add(layers.Dropout(0.3))
+
+    
+    model.add(layers.Conv2D(256, (5, 5), strides=(2, 2), padding='same'))
+    model.add(layers.LeakyReLU())
+    model.add(layers.Dropout(0.3))
+
+    
+    model.add(layers.Conv2D(512, (5, 5), strides=(2, 2), padding='same'))
+    model.add(layers.LeakyReLU())
+    model.add(layers.Dropout(0.3))
+    
+
+    model.add(layers.Flatten())
+    model.add(layers.Dense(1))
+
+    return model
+'''
 def make_discriminator_model():
     model = tf.keras.Sequential()
     model.add(layers.Conv2D(64, (5, 5), strides=(2, 2), padding='same',
@@ -82,7 +139,7 @@ def make_discriminator_model():
     model.add(layers.Dense(1))
 
     return model
-
+    
 discriminator = make_discriminator_model()
 decision = discriminator(generated_image)
 print(decision)
@@ -167,7 +224,7 @@ def generate_and_save_images(model, epoch, test_input):
         plt.imshow(predictions[i, :, :, 0] * 127.5 + 127.5, cmap='gray')
         plt.axis('off')
 
-    if epoch%10 == 0:
+    if epoch%100 == 0:
         plt.savefig(os.path.join('image_at_epoch', 'epoch_{:04d}.png'.format(epoch)))
     #plt.show()
 

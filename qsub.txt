@@ -1,0 +1,45 @@
+[ttang001@login1 myproject]$ qstat -f 226836
+Job Id: 226836.master
+    Job_Name = try
+    Job_Owner = ttang001@login1
+    job_state = Q
+    queue = bigmem128
+    server = master
+    Checkpoint = u
+    ctime = Sun Jun 30 20:05:44 2024
+    Error_Path = master:$PBS_O_WORKDIR/$PBS_JOBID.err
+    Hold_Types = n
+    Join_Path = n
+    Keep_Files = n
+    Mail_Points = a
+    mtime = Sun Jun 30 20:05:44 2024
+    Output_Path = master:$PBS_O_WORKDIR/$PBS_JOBID.out
+    Priority = 0
+    qtime = Sun Jun 30 20:05:44 2024
+    Rerunable = True
+    Resource_List.nodes = 1:ppn=24
+    Resource_List.nodect = 1
+    Resource_List.walltime = 120:00:00
+    Resource_List.feature = mem128-2
+    Variable_List = PBS_O_QUEUE=bigmem128,PBS_O_HOME=/home/ttang001,
+        PBS_O_LOGNAME=ttang001,
+        PBS_O_PATH=/home/software/python-3.12.3/bin:/home/software/gcc-9.4.0/
+        bin:/opt/openmpi-1.8.8-intel17/bin:/opt/intel/compilers_and_libraries_
+        2017.1.132/linux/bin/intel64:/opt/intel/compilers_and_libraries_2017.1
+        .132/linux/mpi/intel64/bin:/opt/intel/debugger_2017/gdb/intel64_mic/bi
+        n:/usr/local/bin:/usr/local/sbin:/usr/lib64/qt-3.3/bin:/usr/local/bin:
+        /usr/bin:/usr/local/sbin:/usr/sbin:/home/ttang001/.local/bin:/home/tta
+        ng001/bin,PBS_O_MAIL=/var/spool/mail/ttang001,PBS_O_SHELL=/bin/bash,
+        PBS_O_LANG=en_US.UTF-8,
+        PBS_O_WORKDIR=/lustre/lwork/ttang001/myproject,PBS_O_HOST=login1,
+        PBS_O_SERVER=master
+    euser = ttang001
+    egroup = ingec
+    queue_type = E
+    etime = Sun Jun 30 20:05:44 2024
+    submit_args = try.sh
+    fault_tolerant = False
+    job_radix = 0
+    submit_host = login1
+    init_work_dir = /lustre/lwork/ttang001/myproject
+    request_version = 1
