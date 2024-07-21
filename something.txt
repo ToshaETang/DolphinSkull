@@ -1,0 +1,50 @@
+qstat -f 228468.master
+
+ssh ttang001@hpc1.ntnu.edu.tw
+tosha20011012
+
+scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/image_at_epoch .
+
+----
+
+工作目錄
+cd /lustre/lwork/ttang001
+
+cd myproject
+source venv/bin/activate
+
+/lustre/lwork/ttang001/myproject
+
+-----載入需要的軟體
+
+[ttang001@login2 ttang001]$ module load python-3.12.3
+
+
+
+-----上傳下載檔案
+
+scp -r 2022-3-8 ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001
+
+scp -r ttang001@140.122.249.218:/lustre/lwork/ttang001/myproject/image_at_epoch C:\Users\Tosha.E.T\Documents\GitHub\DolphinSkull
+
+
+----虛擬環境設置(為了裝套件)
+[ttang001@login2 ttang001]$ mkdir myproject
+[ttang001@login2 ttang001]$ cd myproject
+[ttang001@login2 myproject]$ python3 -m venv venv
+
+
+----venv開關
+
+[ttang001@login2 myproject]$ source venv/bin/activate
+(venv) [ttang001@login2 myproject]$ deactivate
+
+
+----安裝套件
+
+pip install IPython --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org
+
+
+numpy opencv-python keras tensorflow matplotlib IPython
+
+--upgrade pip
