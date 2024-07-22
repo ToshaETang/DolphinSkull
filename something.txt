@@ -1,4 +1,5 @@
 qstat -f 228468.master
+qstat -u ttang001
 
 ssh ttang001@hpc1.ntnu.edu.tw
 tosha20011012
