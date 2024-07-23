@@ -4,12 +4,15 @@ qstat -u ttang001
 ssh ttang001@hpc1.ntnu.edu.tw
 tosha20011012
 
-scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/image_at_epoch .
+scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/image_at_epoch_0720 .
+scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/training_checkpoints_0720 .
+
 
 ----
 
 工作目錄
-cd /lustre/lwork/ttang001
+cd /lustre/lwork/ttang001/myproject
+
 
 cd myproject
 source venv/bin/activate
