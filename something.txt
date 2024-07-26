@@ -1,12 +1,10 @@
-qstat -f 228468.master
+qstat -f 229092.master
 qstat -u ttang001
 
 ssh ttang001@hpc1.ntnu.edu.tw
 tosha20011012
 
-scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/image_at_epoch_0720 .
-scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/training_checkpoints_0720 .
-
+scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/image_at_epoch_0726 .
 
 ----
 
