@@ -4,8 +4,8 @@ qstat -u ttang001
 ssh ttang001@hpc1.ntnu.edu.tw
 tosha20011012
 
-scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/image_at_epoch_0726 .
-scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/train_0726.py .
+scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/image_at_epoch_0729 .
+scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/train_0729.py .
 
 ----
 
