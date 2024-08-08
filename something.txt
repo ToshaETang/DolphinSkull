@@ -1,13 +1,13 @@
-qstat -f 229684.master
+qstat -f 230581.master
 qstat -u ttang001
 
 ssh ttang001@hpc1.ntnu.edu.tw
 tosha20011012
 
-scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/image_at_epoch_0802 .
-scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/train_0802.py .
-scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/train_0802.sh .
-scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/log_0802_1705 .
+scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/image_at_epoch_0807 .
+scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/train_0808.py .
+scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/train_0807.sh .
+scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/log_0805_0941 .
 
 
 ----
@@ -16,14 +16,15 @@ scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/log_0802_1705 
 cd /lustre/lwork/ttang001/myproject
 
 
-cd myproject
-source venv/bin/activate
-
-/lustre/lwork/ttang001/myproject
 
 -----載入需要的軟體
 
 [ttang001@login2 ttang001]$ module load python-3.12.3
+
+----venv開關
+
+[ttang001@login2 myproject]$ source venv/bin/activate
+(venv) [ttang001@login2 myproject]$ deactivate
 
 
 
@@ -38,12 +39,6 @@ scp -r ttang001@140.122.249.218:/lustre/lwork/ttang001/myproject/image_at_epoch 
 [ttang001@login2 ttang001]$ mkdir myproject
 [ttang001@login2 ttang001]$ cd myproject
 [ttang001@login2 myproject]$ python3 -m venv venv
-
-
-----venv開關
-
-[ttang001@login2 myproject]$ source venv/bin/activate
-(venv) [ttang001@login2 myproject]$ deactivate
 
 
 ----安裝套件
