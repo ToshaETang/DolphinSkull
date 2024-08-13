@@ -1,10 +1,10 @@
 
 #!/bin/bash
-#PBS -N train_0808_1050
+#PBS -N train_0812_1403
 #PBS -o master:$PBS_O_WORKDIR/$PBS_JOBID.out
 #PBS -e master:$PBS_O_WORKDIR/$PBS_JOBID.err
-#PBS -q q48cores
-#PBS -l nodes=2:ppn=24
+#PBS -q gpu
+#PBS -l nodes=1:ppn=24
 cd $PBS_O_WORKDIR
 ulimit -a
 echo '======================================================='
@@ -18,12 +18,11 @@ if [ -n "$PBS_NODEFILE" ]; then
  fi
 fi
 
-module load python-3.12.3
-source venv/bin/activate
+source /lustre/lwork/ttang001/myproject/venv/bin/activate
 
-export file='../myproject/train_0808.py'
+export file='/lustre/lwork/ttang001/myproject/train_0808_2.py'
 
-mpirun -hostfile $PBS_NODEFILE -n $NPROCS python3 $file > log_0808_1050
+mpirun -hostfile $PBS_NODEFILE -n $NPROCS python3 $file > log_0812_1403
 
 
 echo "Job Ended at `date`"

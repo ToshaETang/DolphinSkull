@@ -6,7 +6,7 @@ tosha20011012
 
 scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/image_at_epoch_0807 .
 scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/train_0808.py .
-scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/train_0807.sh .
+scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/train_0808.sh .
 scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/log_0805_0941 .
 
 
