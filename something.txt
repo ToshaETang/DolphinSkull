@@ -30,6 +30,8 @@ cd /lustre/lwork/ttang001/myproject
 
 -----上傳下載檔案
 
+scp -r Dolphin_skulls_PNG ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject
+
 scp -r 2022-3-8 ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001
 
 scp -r ttang001@140.122.249.218:/lustre/lwork/ttang001/myproject/image_at_epoch C:\Users\Tosha.E.T\Documents\GitHub\DolphinSkull
