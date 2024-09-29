@@ -1,19 +1,16 @@
 import tensorflow as tf
-import glob
-import imageio
-import matplotlib.pyplot as plt
-import numpy as np
 import os
-import PIL
-from tensorflow.keras import layers
 import time
-from IPython import display
+from tensorflow.keras import layers
+import matplotlib.pyplot as plt
 
 #-------------------------------------------
 BATCH_SIZE = 64
 NOISE_DIM = 50
-IMG_SIZE = 128
+IMG_SIZE = 256
 
+SAVE_NUM = 10
+TRAIN_NUM = 101
 #-------------------------------------------
 # Creating the models
 list_ds = tf.data.Dataset.list_files('./Dolphin_skulls_PNG/*.png')
@@ -108,20 +105,28 @@ def generator_loss(fake_output):
     return cross_entropy(tf.ones_like(fake_output), fake_output)
 
 #-------------------------------------------
-generator_optimizer = tf.keras.optimizers.Adam(0.001)#1e-4
-discriminator_optimizer =tf.keras.optimizers.Adam(0.002)#1e-4)
+generator_optimizer = tf.keras.optimizers.Adam(0.001)
+discriminator_optimizer = tf.keras.optimizers.Adam(0.002)
 
 #-------------------------------------------
-# Saving checkpoints
+# Ensure directories exist
 checkpoint_dir = './models'
+generated_dir = './generated'
+os.makedirs(checkpoint_dir, exist_ok=True)
+os.makedirs(generated_dir, exist_ok=True)
+
 checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
+
+#-------------------------------------------
+# Checkpoint saving
 checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
                                  discriminator_optimizer=discriminator_optimizer,
                                  generator=generator,
                                  discriminator=discriminator)
+manager = tf.train.CheckpointManager(checkpoint, checkpoint_dir, max_to_keep=3)
 
 #-------------------------------------------
-num_examples_to_generate = 4
+num_examples_to_generate = 1
 seed = tf.random.normal([num_examples_to_generate, NOISE_DIM])
 
 #-------------------------------------------
@@ -148,7 +153,7 @@ def train_step(images):
     discriminator_optimizer.apply_gradients(
         zip(gradients_of_discriminator, discriminator.trainable_variables))
 
-    return (gen_loss, disc_loss)
+    return gen_loss, disc_loss
 
 
 def train(dataset, epochs):
@@ -160,52 +165,50 @@ def train(dataset, epochs):
         gen_loss = disc_loss = batch_count = 0
 
         for image_batch in dataset:
-            (step_gen_loss, step_disc_loss) = train_step(image_batch)
+            step_gen_loss, step_disc_loss = train_step(image_batch)
             gen_loss += step_gen_loss
             disc_loss += step_disc_loss
             batch_count += 1
 
-        # Save each epoch loss during training
-        gen_losses.append(gen_loss/batch_count)
-        disc_losses.append(disc_loss/batch_count)
+        gen_losses.append(gen_loss / batch_count)
+        disc_losses.append(disc_loss / batch_count)
 
-        display.clear_output(wait=True)
-        plot_losses(gen_losses, disc_losses)
+        # Produce and save images for each epoch
+        generate_and_save_images(generator, epoch + 1, seed, epoch % SAVE_NUM == 0)
 
-        # Produce images for the GIF as you go
-        generate_and_save_images(generator,
-                                 epoch + 1,
-                                 seed, epoch % 20 == 0)
-
-        # Save the model every 15 epochs
-        if (epoch + 1) % 20 == 0:
-            checkpoint.save(file_prefix=checkpoint_prefix)
+        # Save the model every 20 epochs
+        if (epoch + 1) % SAVE_NUM == 0:
+            manager.save()
 
         print('Time for epoch {} is {} sec'.format(epoch + 1, time.time() - start))
-       
+
+    # Save the loss plot after training
+    save_loss_plot(gen_losses, disc_losses)
+
 #-------------------------------------------
-def plot_losses(gen_losses, disc_losses):
-    plt.plot(gen_losses, label='Generator')
-    plt.plot(disc_losses, label='Discriminator')
-    plt.legend()
-    plt.show()
-
-
 def generate_and_save_images(model, epoch, test_input, save=False):
     predictions = model(test_input, training=False)
 
-    fig = plt.figure(figsize=(4, 4))
-
-    for i in range(predictions.shape[0]):
-        plt.subplot(4, 4, i+1)
-        plt.imshow(predictions[i, :, :, :])
-        plt.axis('off')
     if save:
-        plt.savefig('generated/image_at_epoch_{:04d}.png'.format(epoch))
-    plt.show()
+        for i in range(predictions.shape[0]):
+            img = predictions[i, :, :, :]
+            img_path = os.path.join(generated_dir, 'image_at_epoch_{:04d}_{}.png'.format(epoch, i))
+            tf.keras.preprocessing.image.save_img(img_path, img)
 
 #-------------------------------------------
-train(train_ds, 101)
+def save_loss_plot(gen_losses, disc_losses):
+    plt.figure()
+    plt.plot(gen_losses, label='Generator Loss')
+    plt.plot(disc_losses, label='Discriminator Loss')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.legend()
+    plt.title('Generator and Discriminator Losses Over Time')
+    plt.savefig(os.path.join(generated_dir, 'loss_plot.png'))
+    plt.close()
+
+#-------------------------------------------
+train(train_ds, TRAIN_NUM)
 
 #-------------------------------------------
 # Restore the latest checkpoint
