@@ -4,10 +4,10 @@ qstat -u ttang001
 ssh ttang001@hpc1.ntnu.edu.tw
 tosha20011012
 
-scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/generated .
-scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/train_0814.py .
+scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/generated_2 .
+scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/train_linux.py .
 scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/train_0814.sh .
-scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/log__0929_2202 .
+scp -r ttang001@hpc1.ntnu.edu.tw:/lustre/lwork/ttang001/myproject/log_1006_2213_2 .
 
 
 ----
